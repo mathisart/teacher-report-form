@@ -4,128 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>學力講義作業未完成填報</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .form-container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 1.8em;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #555;
-        }
-        input[type="text"],
-        input[type="number"],
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 1em;
-        }
-        input:focus,
-        select:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .submit-btn:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="form-container">
         <h1>學力講義作業未完成填報</h1>
         
-        <form id="data-form" action="https://script.google.com/macros/s/AKfycbyh_fgC9Za-sZIWbU1lCleC5pSwnaQqNDP6Y5qG8b--ng0lCSKlcoRZRFvuoVpQD-xMuA/exec" method="post">
+        <form id="data-form" novalidate>
             
             <div class="form-group">
                 <label for="studentClass">班級</label>
-                <select id="studentClass" name="studentClass" required>
+                <select id="studentClass" name="studentClass" required autofocus>
                     <option value="">-- 請選擇班級 --</option>
-                    <optgroup label="七年級">
-                        <script>
-                            for (let i = 1; i <= 19; i++) {
-                                document.write(`<option value="7${String(i).padStart(2, '0')}">7${String(i).padStart(2, '0')}</option>`);
-                            }
-                        </script>
-                    </optgroup>
-                    <optgroup label="八年級">
-                        <script>
-                            for (let i = 1; i <= 19; i++) {
-                                document.write(`<option value="8${String(i).padStart(2, '0')}">8${String(i).padStart(2, '0')}</option>`);
-                            }
-                        </script>
-                    </optgroup>
-                    <optgroup label="九年級">
-                        <script>
-                            for (let i = 1; i <= 18; i++) {
-                                document.write(`<option value="9${String(i).padStart(2, '0')}">9${String(i).padStart(2, '0')}</option>`);
-                            }
-                        </script>
-                    </optgroup>
-                </select>
+                    </select>
             </div>
 
             <div class="form-group">
                 <label for="studentName">學生姓名</label>
-                <input type="text" id="studentName" name="studentName" required>
+                <input type="text" id="studentName" name="studentName" placeholder="請輸入學生姓名" required>
             </div>
 
             <div class="form-group">
                 <label for="studentSeatNumber">學生座號</label>
-                <input type="number" id="studentSeatNumber" name="studentSeatNumber" min="1" required>
+                <input type="number" id="studentSeatNumber" name="studentSeatNumber" min="1" placeholder="請輸入座號" required>
             </div>
 
             <div class="form-group">
                 <label for="subject">未完成的科目</label>
-                <input type="text" id="subject" name="subject" required>
+                <input type="text" id="subject" name="subject" placeholder="例如：國文、數學" required>
             </div>
 
             <div class="form-group">
                 <label for="scope">未完成的範圍</label>
-                <input type="text" id="scope" name="scope" required>
+                <input type="text" id="scope" name="scope" placeholder="例如：第一課練習卷" required>
             </div>
             
-            <button type="submit" class="submit-btn">提交資料</button>
+            <button type="submit" class="submit-btn" id="submit-btn">提交資料</button>
+            
+            <div id="status-message"></div>
         </form>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
