@@ -1,6 +1,21 @@
+/* --- 引入 Google Font 字體 --- */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+/* --- :root 用於定義全域色彩變數，方便統一管理 --- */
+:root {
+    --primary-color: #2c3e50; /* 深藍色 (主色) */
+    --primary-hover-color: #34495e; /* 深藍色 (滑鼠懸停) */
+    --background-color: #ecf0f1; /* 淺灰色 (背景) */
+    --container-bg-color: #ffffff; /* 白色 (容器背景) */
+    --text-color: #333333; /* 深灰色 (主要文字) */
+    --label-color: #555555; /* 灰色 (標籤文字) */
+    --border-color: #bdc3c7; /* 灰色 (邊框) */
+}
+
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: #f4f7f6;
+    /* 使用引入的 Google Font */
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--background-color);
     margin: 0;
     padding: 20px;
     display: flex;
@@ -8,76 +23,108 @@ body {
     align-items: center;
     min-height: 100vh;
 }
-.form-container {
-    background-color: #ffffff;
-    padding: 30px 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
-}
-h1 {
-    color: #333;
+
+/* --- 校徽容器 --- */
+.logo-container {
     text-align: center;
-    margin-bottom: 25px;
-    font-size: 1.8em;
-}
-.form-group {
     margin-bottom: 20px;
 }
+.logo-container img {
+    max-width: 100px; /* 控制校徽最大寬度 */
+    height: auto;
+}
+
+.form-container {
+    background-color: var(--container-bg-color);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 550px;
+    /* 增加頂部色條，提升設計感 */
+    border-top: 5px solid var(--primary-color);
+}
+
+h1 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-size: 1.9em;
+    font-weight: 700; /* 加粗字重 */
+    letter-spacing: 1.5px; /* 增加字距 */
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
 label {
     display: block;
     margin-bottom: 8px;
-    font-weight: 600;
-    color: #555;
+    font-weight: 500; /* 適中的字重 */
+    color: var(--label-color);
 }
+
 input[type="text"],
 input[type="number"],
 select {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 14px;
+    border: 1px solid var(--border-color);
+    background-color: #fdfdfd;
+    border-radius: 8px;
     box-sizing: border-box;
     font-size: 1em;
-    /* 增加過渡效果 */
+    font-family: 'Noto Sans TC', sans-serif;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
 input:focus,
 select:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 8px rgba(44, 62, 80, 0.2);
     outline: none;
 }
+
 .submit-btn {
     width: 100%;
-    padding: 15px;
-    background-color: #007bff;
+    padding: 16px;
+    background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 1.1em;
-    font-weight: bold;
+    font-weight: 700;
+    letter-spacing: 1px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    /* 增加按鈕陰影，使其更立體 */
+    box-shadow: 0 4px 15px rgba(44, 62, 80, 0.2);
 }
-.submit-btn:hover {
-    background-color: #0056b3;
+
+.submit-btn:hover:not(:disabled) {
+    background-color: var(--primary-hover-color);
+    /* 滑鼠懸停時輕微上浮 */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(44, 62, 80, 0.3);
 }
-/* 按鈕禁用時的樣式 */
+
 .submit-btn:disabled {
-    background-color: #a0cfff;
+    background-color: #bdc3c7;
     cursor: not-allowed;
+    box-shadow: none;
 }
-/* 狀態訊息樣式 */
+
 #status-message {
     text-align: center;
     margin-top: 15px;
-    font-weight: bold;
+    font-weight: 500;
+    font-size: 1.1em;
 }
 .success {
-    color: #28a745;
+    color: #27ae60;
 }
 .error {
-    color: #dc3545;
+    color: #c0392b;
 }
