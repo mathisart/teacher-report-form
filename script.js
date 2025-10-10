@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     
     // --- !! 請在這裡貼上您自己的 Apps Script Web App 網址 !! ---
-    const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbyh_.../exec';
+    const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbyh_fgC9Za-sZIWbU1lCleC5pSwnaQqNDP6Y5qG8b--ng0lCSKlcoRZRFvuoVpQD-xMuA/exec';
 
     // --- 動態產生班級選項 ---
     const classSelect = document.getElementById('studentClass');
