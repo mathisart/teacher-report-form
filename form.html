@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>學力研究社講義作業未完成填報</title>
+    <title>學力研究社進度回報</title>
     <style>
         body {
             box-sizing: border-box;
@@ -31,13 +31,23 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
+        /* ===== 修改開始：調整主標題樣式 ===== */
         h1 {
             text-align: center;
             color: #333;
-            margin-bottom: 30px;
+            margin-bottom: 10px; /* 縮小與副標題的間距 */
             font-size: 28px;
             font-weight: bold;
         }
+        /* ===== 新增：副標題樣式 ===== */
+        .subtitle {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-size: 16px;
+            color: #555;
+        }
+        /* ===== 修改結束 ===== */
         .form-group {
             margin-bottom: 25px;
         }
@@ -134,8 +144,8 @@
     </div>
     
     <div class="form-container">
-        <h1>學力研究社講義作業未完成填報</h1>
-        
+        <h1>進度回報系統</h1>
+        <p class="subtitle">學力研究社專用</p>
         <form id="data-form" novalidate>
             
             <div class="form-group">
@@ -149,7 +159,7 @@
                             }
                         </script>
                     </optgroup>
-                    </select>
+                </select>
             </div>
 
             <div class="form-group">
@@ -174,76 +184,4 @@
                     <option value="地科">地科</option>
                     <option value="歷史">歷史</option>
                     <option value="地理">地理</option>
-                    <option value="公民">公民</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="scope">未完成的範圍 *</label>
-                <textarea id="scope" name="scope" rows="3" placeholder="請詳細說明未完成的作業範圍，例如：第三章習題1-10題、講義第15-20頁等" required></textarea>
-            </div>
-            
-            <button type="submit" class="submit-btn" id="submit-btn">提交資料</button>
-            
-            <div id="status-message"></div>
-        </form>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbyh_fgC9Za-sZIWbU1lCleC5pSwnaQqNDP6Y5qG8b--ng0lCSKlcoRZRFvuoVpQD-xMuA/exec';
-
-            const form = document.getElementById('data-form');
-            const submitBtn = document.getElementById('submit-btn');
-            const statusMessage = document.getElementById('status-message');
-
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                if (!form.checkValidity()) {
-                    statusMessage.innerHTML = '請填寫所有標示 * 的欄位！';
-                    statusMessage.className = 'status-error';
-                    statusMessage.style.display = 'block';
-                    return;
-                }
-
-                submitBtn.disabled = true;
-                submitBtn.textContent = '提交中...';
-                statusMessage.innerHTML = '<span class="spinner"></span>資料傳送中，請稍候...';
-                statusMessage.className = '';
-                statusMessage.style.display = 'block';
-
-                const formData = new FormData(form);
-
-                fetch(appsScriptUrl, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.text())
-                .then(data => {
-                    if (data.includes('成功')) {
-                        statusMessage.innerHTML = '✅ 填報完成！資料已成功提交';
-                        statusMessage.className = 'status-success';
-                        form.reset();
-                        document.getElementById('studentClass').focus();
-                    } else {
-                        throw new Error(data);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    statusMessage.innerHTML = '⚠️ 提交失敗，請檢查網路或稍後再試。';
-                    statusMessage.className = 'status-error';
-                })
-                .finally(() => {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = '提交資料';
-                    setTimeout(() => {
-                        statusMessage.style.display = 'none';
-                    }, 5000);
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+                    <option value="公民">公民
