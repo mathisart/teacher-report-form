@@ -3,45 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>學力講義作業未完成填報</title>
-    <link rel="stylesheet" href="style.css">
+    <title>學力研究社講義作業未完成填報</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100%;
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo-container img {
+            max-width: 120px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+            font-size: 16px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        #status-message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: none; /* 預設隱藏 */
+            transition: opacity 0.3s ease;
+        }
+        .status-success {
+            background-color: #e8f5e8;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+        .status-error {
+            background-color: #fdecea;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+        .spinner {
+            display: inline-block;
+            vertical-align: middle; /* 讓轉圈圈跟文字對齊 */
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(102, 126, 234, 0.3);
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 { font-size: 24px; }
+        }
+    </style>
 </head>
 <body>
     <div class="logo-container">
-        <img src="https://raw.githubusercontent.com/mathisart/teacher-report-form/main/msys_1126_7604592_06998.png
-" alt="校徽">
+        <img src="https://raw.githubusercontent.com/mathisart/teacher-report-form/main/msys_1126_7604592_06998.png" alt="校徽">
     </div>
     
     <div class="form-container">
-        <h1>學力講義作業未完成填報</h1>
+        <h1>學力研究社講義作業未完成填報</h1>
         
         <form id="data-form" novalidate>
             
             <div class="form-group">
-                <label for="studentClass">班級</label>
+                <label for="studentClass">班級 *</label>
                 <select id="studentClass" name="studentClass" required autofocus>
                     <option value="">-- 請選擇班級 --</option>
-                    </select>
+                    <optgroup label="七年級">
+                        <script>
+                            for (let i = 1; i <= 19; i++) {
+                                document.write(`<option value="7${String(i).padStart(2, '0')}">七年${i}班</option>`);
+                            }
+                        </script>
+                    </optgroup>
+                    <optgroup label="八年級">
+                        <script>
+                            for (let i = 1; i <= 19; i++) {
+                                document.write(`<option value="8${String(i).padStart(2, '0')}">八年${i}班</option>`);
+                            }
+                        </script>
+                    </optgroup>
+                    <optgroup label="九年級">
+                         for (let i = 1; i <= 18; i++) {
+                                document.write(`<option value="9${String(i).padStart(2, '0')}">九年${i}班</option>`);
+                            }
+                        </script>
+                    </optgroup>
+                </select>
             </div>
 
             <div class="form-group">
-                <label for="studentName">學生姓名</label>
+                <label for="studentName">學生姓名 *</label>
                 <input type="text" id="studentName" name="studentName" placeholder="請輸入學生姓名" required>
             </div>
 
             <div class="form-group">
-                <label for="studentSeatNumber">學生座號</label>
-                <input type="number" id="studentSeatNumber" name="studentSeatNumber" min="1" placeholder="請輸入座號" required>
+                <label for="studentSeatNumber">學生座號 *</label>
+                <input type="number" id="studentSeatNumber" name="studentSeatNumber" min="1" max="50" placeholder="請輸入座號" required>
             </div>
 
             <div class="form-group">
-                <label for="subject">未完成的科目</label>
-                <input type="text" id="subject" name="subject" placeholder="例如：國文、數學" required>
+                <label for="subject">未完成的科目 *</label>
+                <select id="subject" name="subject" required>
+                    <option value="">-- 請選擇科目 --</option>
+                    <option value="國文">國文</option>
+                    <option value="英語">英語</option>
+                    <option value="數學">數學</option>
+                    <option value="理化">理化</option>
+                    <option value="生物">生物</option>
+                    <option value="地科">地科</option>
+                    <option value="歷史">歷史</option>
+                    <option value="地理">地理</option>
+                    <option value="公民">公民</option>
+                </select>
             </div>
 
             <div class="form-group">
-                <label for="scope">未完成的範圍</label>
-                <input type="text" id="scope" name="scope" placeholder="例如：第一課練習卷" required>
+                <label for="scope">未完成的範圍 *</label>
+                <textarea id="scope" name="scope" rows="3" placeholder="請詳細說明未完成的作業範圍，例如：第三章習題1-10題、講義第15-20頁等" required></textarea>
             </div>
             
             <button type="submit" class="submit-btn" id="submit-btn">提交資料</button>
@@ -50,6 +202,65 @@
         </form>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- !! 請在這裡貼上您自己的 Apps Script Web App 網址 !! ---
+            const appsScriptUrl = '請在這裡貼上您的AppsScript網址';
+
+            const form = document.getElementById('data-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const statusMessage = document.getElementById('status-message');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!form.checkValidity()) {
+                    statusMessage.innerHTML = '請填寫所有標示 * 的欄位！';
+                    statusMessage.className = 'status-error';
+                    statusMessage.style.display = 'block';
+                    return;
+                }
+
+                // 禁用按鈕並顯示處理中
+                submitBtn.disabled = true;
+                submitBtn.textContent = '提交中...';
+                statusMessage.innerHTML = '<span class="spinner"></span>資料傳送中，請稍候...';
+                statusMessage.className = ''; // 清除舊樣式
+                statusMessage.style.display = 'block';
+
+                const formData = new FormData(form);
+
+                fetch(appsScriptUrl, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(data => {
+                    if (data.includes('成功')) {
+                        statusMessage.innerHTML = '✅ 填報完成！資料已成功提交';
+                        statusMessage.className = 'status-success';
+                        form.reset();
+                        document.getElementById('studentClass').focus();
+                    } else {
+                        throw new Error(data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    statusMessage.innerHTML = '⚠️ 提交失敗，請檢查網路或稍後再試。';
+                    statusMessage.className = 'status-error';
+                })
+                .finally(() => {
+                    // 恢復按鈕
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '提交資料';
+                    // 5秒後自動隱藏訊息
+                    setTimeout(() => {
+                        statusMessage.style.display = 'none';
+                    }, 5000);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
