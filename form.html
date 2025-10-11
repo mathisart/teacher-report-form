@@ -106,7 +106,7 @@
         }
         .spinner {
             display: inline-block;
-            vertical-align: middle; /* 讓轉圈圈跟文字對齊 */
+            vertical-align: middle;
             width: 20px;
             height: 20px;
             border: 3px solid rgba(102, 126, 234, 0.3);
@@ -157,7 +157,8 @@
                         </script>
                     </optgroup>
                     <optgroup label="九年級">
-                         for (let i = 1; i <= 18; i++) {
+                        <script>
+                            for (let i = 1; i <= 18; i++) {
                                 document.write(`<option value="9${String(i).padStart(2, '0')}">九年${i}班</option>`);
                             }
                         </script>
@@ -204,8 +205,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- !! 請在這裡貼上您自己的 Apps Script Web App 網址 !! ---
-            const appsScriptUrl = '請在這裡貼上您的AppsScript網址';
+            // --- 您的 Apps Script 網址已正確填入 ---
+            const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbyh_fgC9Za-sZIWbU1lCleC5pSwnaQqNDP6Y5qG8b--ng0lCSKlcoRZRFvuoVpQD-xMuA/exec';
 
             const form = document.getElementById('data-form');
             const submitBtn = document.getElementById('submit-btn');
@@ -221,11 +222,10 @@
                     return;
                 }
 
-                // 禁用按鈕並顯示處理中
                 submitBtn.disabled = true;
                 submitBtn.textContent = '提交中...';
                 statusMessage.innerHTML = '<span class="spinner"></span>資料傳送中，請稍候...';
-                statusMessage.className = ''; // 清除舊樣式
+                statusMessage.className = '';
                 statusMessage.style.display = 'block';
 
                 const formData = new FormData(form);
@@ -251,10 +251,8 @@
                     statusMessage.className = 'status-error';
                 })
                 .finally(() => {
-                    // 恢復按鈕
                     submitBtn.disabled = false;
                     submitBtn.textContent = '提交資料';
-                    // 5秒後自動隱藏訊息
                     setTimeout(() => {
                         statusMessage.style.display = 'none';
                     }, 5000);
