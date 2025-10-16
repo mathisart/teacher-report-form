@@ -141,9 +141,14 @@
     </div>
     
     <div class="form-container">
-        <h1>作業預警通知系統</h1>
+        <h1>作業預警系統</h1>
         <p class="subtitle">學力研究社專用</p>
         <form id="data-form" novalidate>
+            
+             <div class="form-group">
+                <label for="entryDate">日期 *</label>
+                <input type="date" id="entryDate" name="entryDate" required>
+            </div>
             
             <div class="form-group">
                 <label for="studentClass">班級 *</label>
@@ -179,32 +184,6 @@
                 <label for="studentSeatNumber">學生座號 *</label>
                 <input type="number" id="studentSeatNumber" name="studentSeatNumber" min="1" max="50" placeholder="請輸入座號" required>
             </div>
-
-            <div class="form-group">
-                <label for="entryDate">日期 *</label>
-                <input type="date" id="entryDate" name="entryDate" required>
-            </div>
-
-            <div class="form-group">
-                <label for="subject">未完成的科目 *</label>
-                <select id="subject" name="subject" required>
-                    <option value="">-- 請選擇科目 --</option>
-                    <option value="國文">國文</option>
-                    <option value="英語">英語</option>
-                    <option value="數學">數學</option>
-                    <option value="理化">理化</option>
-                    <option value="生物">生物</option>
-                    <option value="地科">地科</option>
-                    <option value="歷史">歷史</option>
-                    <option value="地理">地理</option>
-                    <option value="公民">公民</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="scope">未完成的範圍 *</label>
-                <textarea id="scope" name="scope" rows="3" placeholder="請詳細說明未完成的作業範圍，例如：第三章習題1-10題、講義第15-20頁等" required></textarea>
-            </div>
             
             <button type="submit" class="submit-btn" id="submit-btn">提交資料</button>
             
@@ -214,7 +193,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // 自動將日期欄位設定為今天
             document.getElementById('entryDate').valueAsDate = new Date();
         
             const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbyh_fgC9Za-sZIWbU1lCleC5pSwnaQqNDP6Y5qG8b--ng0lCSKlcoRZRFvuoVpQD-xMuA/exec';
@@ -224,37 +202,28 @@
 
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                
                 if (!form.checkValidity()) {
                     statusMessage.innerHTML = '請填寫所有標示 * 的欄位！';
                     statusMessage.className = 'status-error';
                     statusMessage.style.display = 'block';
                     return;
                 }
-
                 submitBtn.disabled = true;
                 submitBtn.textContent = '提交中...';
                 statusMessage.innerHTML = '<span class="spinner"></span>資料傳送中，請稍候...';
                 statusMessage.className = '';
                 statusMessage.style.display = 'block';
-
                 const formData = new FormData(form);
-
-                fetch(appsScriptUrl, {
-                    method: 'POST',
-                    body: formData
-                })
+                fetch(appsScriptUrl, { method: 'POST', body: formData })
                 .then(response => response.text())
                 .then(data => {
                     if (data.includes('成功')) {
                         statusMessage.innerHTML = '✅ 填報完成！資料已成功提交';
                         statusMessage.className = 'status-success';
                         form.reset();
-                        document.getElementById('entryDate').valueAsDate = new Date(); // 重設後再次填入今天日期
+                        document.getElementById('entryDate').valueAsDate = new Date();
                         document.getElementById('studentClass').focus();
-                    } else {
-                        throw new Error(data);
-                    }
+                    } else { throw new Error(data); }
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -264,9 +233,7 @@
                 .finally(() => {
                     submitBtn.disabled = false;
                     submitBtn.textContent = '提交資料';
-                    setTimeout(() => {
-                        statusMessage.style.display = 'none';
-                    }, 5000);
+                    setTimeout(() => { statusMessage.style.display = 'none'; }, 5000);
                 });
             });
         });
