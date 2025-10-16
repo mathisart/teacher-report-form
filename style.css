@@ -181,6 +181,11 @@
             </div>
 
             <div class="form-group">
+                <label for="entryDate">日期 *</label>
+                <input type="date" id="entryDate" name="entryDate" required>
+            </div>
+
+            <div class="form-group">
                 <label for="subject">未完成的科目 *</label>
                 <select id="subject" name="subject" required>
                     <option value="">-- 請選擇科目 --</option>
@@ -209,8 +214,10 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // 自動將日期欄位設定為今天
+            document.getElementById('entryDate').valueAsDate = new Date();
+        
             const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbyh_fgC9Za-sZIWbU1lCleC5pSwnaQqNDP6Y5qG8b--ng0lCSKlcoRZRFvuoVpQD-xMuA/exec';
-
             const form = document.getElementById('data-form');
             const submitBtn = document.getElementById('submit-btn');
             const statusMessage = document.getElementById('status-message');
@@ -243,6 +250,7 @@
                         statusMessage.innerHTML = '✅ 填報完成！資料已成功提交';
                         statusMessage.className = 'status-success';
                         form.reset();
+                        document.getElementById('entryDate').valueAsDate = new Date(); // 重設後再次填入今天日期
                         document.getElementById('studentClass').focus();
                     } else {
                         throw new Error(data);
