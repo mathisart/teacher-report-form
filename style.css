@@ -1,242 +1,172 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>學力研究社作業預警通知系統</title>
-    <style>
-        body {
-            box-sizing: border-box;
-            font-family: 'Microsoft JhengHei', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0;
-            padding: 20px;
-            min-height: 100%;
-        }
-        .logo-container {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .logo-container img {
-            max-width: 120px;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        .form-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .subtitle {
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 30px;
-            font-size: 16px;
-            color: #555;
-        }
-        .form-group {
-            margin-bottom: 25px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #555;
-            font-size: 16px;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            box-sizing: border-box;
-        }
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
-        }
-        .submit-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-        }
-        .submit-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-        .submit-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        #status-message {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: bold;
-            display: none; /* 預設隱藏 */
-            transition: opacity 0.3s ease;
-        }
-        .status-success {
-            background-color: #e8f5e8;
-            color: #2e7d32;
-            border: 1px solid #c8e6c9;
-        }
-        .status-error {
-            background-color: #fdecea;
-            color: #c62828;
-            border: 1px solid #ffcdd2;
-        }
-        .spinner {
-            display: inline-block;
-            vertical-align: middle;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(102, 126, 234, 0.3);
-            border-top-color: #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-right: 10px;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        @media (max-width: 768px) {
-            .form-container {
-                padding: 20px;
-                margin: 10px;
-            }
-            h1 { font-size: 24px; }
-        }
-    </style>
-</head>
-<body>
-    <div class="logo-container">
-        <img src="https://raw.githubusercontent.com/mathisart/teacher-report-form/main/msys_1126_7604592_06998.png" alt="校徽">
-    </div>
-    
-    <div class="form-container">
-        <h1>作業預警系統</h1>
-        <p class="subtitle">學力研究社專用</p>
-        <form id="data-form" novalidate>
-            
-             <div class="form-group">
-                <label for="entryDate">日期 *</label>
-                <input type="date" id="entryDate" name="entryDate" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="studentClass">班級 *</label>
-                <select id="studentClass" name="studentClass" required autofocus>
-                    <option value="">-- 請選擇班級 --</option>
-                    <optgroup label="九年級">
-                        <script>
-                            for (let i = 1; i <= 18; i++) {
-                                document.write(`<option value="9${String(i).padStart(2, '0')}">九年${i}班</option>`);
-                            }
-                        </script>
-                    </optgroup>
-                </select>
-            </div>
+/* 全域樣式 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-            <div class="form-group">
-                <label for="studyGroup">學力班群 *</label>
-                <select id="studyGroup" name="studyGroup" required>
-                    <option value="">-- 請選擇班群 --</option>
-                    <option value="A">A班群</option>
-                    <option value="B">B班群</option>
-                    <option value="C">C班群</option>
-                    <option value="D">D班群</option>
-                </select>
-            </div>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, "Microsoft JhengHei", "PingFang TC",
+    sans-serif;
+  background: linear-gradient(135deg, #e3f2fd 0%, #f8fbff 50%, #e1f5fe 100%);
+  min-height: 100vh;
+}
 
-            <div class="form-group">
-                <label for="studentName">學生姓名 *</label>
-                <input type="text" id="studentName" name="studentName" placeholder="請輸入學生姓名" required>
-            </div>
+/* 置中外框 */
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
 
-            <div class="form-group">
-                <label for="studentSeatNumber">學生座號 *</label>
-                <input type="number" id="studentSeatNumber" name="studentSeatNumber" min="1" max="50" placeholder="請輸入座號" required>
-            </div>
-            
-            <button type="submit" class="submit-btn" id="submit-btn">提交資料</button>
-            
-            <div id="status-message"></div>
-        </form>
-    </div>
+/* 白色卡片 */
+.card {
+  width: 100%;
+  max-width: 720px;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.15);
+  padding: 32px 28px 24px;
+}
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('entryDate').valueAsDate = new Date();
-        
-            const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbyh_fgC9Za-sZIWbU1lCleC5pSwnaQqNDP6Y5qG8b--ng0lCSKlcoRZRFvuoVpQD-xMuA/exec';
-            const form = document.getElementById('data-form');
-            const submitBtn = document.getElementById('submit-btn');
-            const statusMessage = document.getElementById('status-message');
+/* 標題區 */
+.header {
+  text-align: center;
+  margin-bottom: 28px;
+}
 
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                if (!form.checkValidity()) {
-                    statusMessage.innerHTML = '請填寫所有標示 * 的欄位！';
-                    statusMessage.className = 'status-error';
-                    statusMessage.style.display = 'block';
-                    return;
-                }
-                submitBtn.disabled = true;
-                submitBtn.textContent = '提交中...';
-                statusMessage.innerHTML = '<span class="spinner"></span>資料傳送中，請稍候...';
-                statusMessage.className = '';
-                statusMessage.style.display = 'block';
-                const formData = new FormData(form);
-                fetch(appsScriptUrl, { method: 'POST', body: formData })
-                .then(response => response.text())
-                .then(data => {
-                    if (data.includes('成功')) {
-                        statusMessage.innerHTML = '✅ 填報完成！資料已成功提交';
-                        statusMessage.className = 'status-success';
-                        form.reset();
-                        document.getElementById('entryDate').valueAsDate = new Date();
-                        document.getElementById('studentClass').focus();
-                    } else { throw new Error(data); }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    statusMessage.innerHTML = '⚠️ 提交失敗，請檢查網路或稍後再試。';
-                    statusMessage.className = 'status-error';
-                })
-                .finally(() => {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = '提交資料';
-                    setTimeout(() => { statusMessage.style.display = 'none'; }, 5000);
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+.header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.header p {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* 欄位區 */
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  font-size: 14px;
+  color: #4b5563;
+  margin-bottom: 6px;
+}
+
+.field select {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.field select:focus {
+  border-color: #3b82f6;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+/* 按鈕區 */
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 主按鈕 */
+.btn-main {
+  width: 100%;
+  padding: 14px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-main:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.55);
+}
+
+.btn-main:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+}
+
+/* 清空按鈕 */
+.btn-clear {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: #e5e7eb;
+  color: #374151;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.btn-clear:hover {
+  background-color: #d1d5db;
+}
+
+.btn-clear:active {
+  transform: translateY(1px);
+}
+
+/* 結果區 */
+.result {
+  margin-top: 20px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background-color: #ecfdf3;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.result.empty {
+  display: none;
+}
+
+/* footer */
+.footer {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* RWD */
+@media (max-width: 480px) {
+  .card {
+    padding: 24px 18px 18px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+}
